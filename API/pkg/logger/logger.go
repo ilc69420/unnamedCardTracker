@@ -32,10 +32,9 @@ func New() Logger {
 	return Logger{Base: baseLogger}
 }
 
-func (l *Logger) DB(msg, query, durationMs string) {
+func (l *Logger) DB(msg, query string) {
 	l.Base.Info(msg, slog.Group("db",
 		"query", "query",
-		"durationMs", "durationMs",
 	))
 }
 

@@ -15,6 +15,7 @@ CREATE TABLE pokemon_auctions (
   seller TEXT NOT NULL,
   status BOOLEAN NOT NULL,
   FOREIGN KEY (card_id) REFERENCES pokemon_cards(card_id)
+  UNIQUE (card_id, price, seller)
 );
 
 -- +goose StatementEnd

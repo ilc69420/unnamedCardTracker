@@ -18,6 +18,8 @@ func (m *Pokemon) RegisterPokemonRoutes(app *app.App) *http.ServeMux {
 	r.HandleFunc("GET /card", m.getCard)
 	r.HandleFunc("POST /card", m.postCard)
 
+	r.HandleFunc("POST /auctions/insert-auctions", m.insertAuctions)
+
 	return r
 }
 
@@ -65,4 +67,17 @@ func (h *Pokemon) postCard(w http.ResponseWriter, r *http.Request) {
 	}
 
 	w.WriteHeader(http.StatusCreated)
+}
+
+func (h *Pokemon) insertAuctions(w http.ResponseWriter, r *http.Request) {
+	var auctions []PokemonAuction
+	if err := json.NewDecoder(r.Body).Decode(&auctions); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
+
+	if err := h.Service.insertAuctions(r.Context(), auctions); err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+		return
+	}
 }

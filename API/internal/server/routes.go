@@ -13,7 +13,7 @@ func registerRoutes(app *app.App) *http.ServeMux {
 	// Pokemon related
 	pokemonHandler := &pokemon.Pokemon{
 		App:     app,
-		Service: &pokemon.PokemonService{DB: app.DB},
+		Service: &pokemon.PokemonService{App: app},
 	}
 	pokemonRoutes := pokemonHandler.RegisterPokemonRoutes(app)
 
